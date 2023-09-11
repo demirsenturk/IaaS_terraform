@@ -1,4 +1,4 @@
-#Create the VNET 
+#Create the VNET
 resource "azurerm_virtual_network" "mainnetwork-dualstack" {
     name                = var.vnet_name
     location            = var.location
@@ -10,7 +10,7 @@ resource "azurerm_subnet" "test_subnets" {
     name = "${lookup(element(var.subnet_prefix, count.index), "name")}"
     count = "${length(var.subnet_prefix)}"
     resource_group_name = var.resource_group_name
-    virtual_network_name = var.vnet_name
+    virtual_network_name = azurerm_virtual_network.mainnetwork-dualstack.name
     address_prefixes = "${lookup(element(var.subnet_prefix, count.index), "ip")}"
 }
 
